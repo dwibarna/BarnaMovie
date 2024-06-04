@@ -10,7 +10,9 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.sp
 import com.example.barnaton.ui.theme.BarnatonTheme
 
 class MainActivity : ComponentActivity() {
@@ -34,14 +36,19 @@ class MainActivity : ComponentActivity() {
 fun Greeting(name: String, modifier: Modifier = Modifier) {
     Text(
         text = "Hello $name!",
-        modifier = modifier
+        modifier = modifier,
+        fontSize = 24.sp
     )
 }
 
-@Preview(showBackground = true)
+@Preview(
+    showBackground = true,
+    showSystemUi = true,
+)
 @Composable
 fun GreetingPreview() {
     BarnatonTheme {
-        Greeting("sdasdasdasdasdasd")
+        Greeting("")
     }
+    //kata fahri bisa
 }
