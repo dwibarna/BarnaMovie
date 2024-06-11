@@ -14,41 +14,20 @@ import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import com.example.barnaton.ui.theme.BarnatonTheme
+import dagger.hilt.android.AndroidEntryPoint
+import retrofit2.Retrofit
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
             BarnatonTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
+/*                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+
+                }*/
             }
         }
     }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier,
-        fontSize = 24.sp
-    )
-}
-
-@Preview(
-    showBackground = true,
-    showSystemUi = true,
-)
-@Composable
-fun GreetingPreview() {
-    BarnatonTheme {
-        Greeting("")
-    }
-    //kata fahri bisa
 }
