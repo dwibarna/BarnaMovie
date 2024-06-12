@@ -4,4 +4,5 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android) apply false
     alias(libs.plugins.kotlin.kapt) apply false
     alias(libs.plugins.hilt.android) apply false
+    alias(libs.plugins.kotlin.ksp) version "1.8.10-1.0.9" apply false
 }
