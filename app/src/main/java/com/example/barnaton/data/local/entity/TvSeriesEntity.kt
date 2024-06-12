@@ -48,4 +48,26 @@ data class TvSeriesEntity(
 
     @ColumnInfo("vote_count")
     val voteCount: Float? = null,
+
+    @ColumnInfo("type_entity")
+    val typeEntity: String? = null
 )
+
+
+enum class TypeEntity(val value: String) {
+    POPULAR("popular"),
+    ON_AIR("on_air"),
+    TOP_RATED("top_rated"),
+    OTHER("other");
+
+/*    companion object {
+        fun fromValue(value: String): TypeEntity? {
+            for (type in entries) {
+                if (type.value == value) {
+                    return type
+                }
+            }
+            return null
+        }
+    }*/
+}

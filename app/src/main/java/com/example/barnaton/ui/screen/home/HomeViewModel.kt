@@ -11,7 +11,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-/*
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val useCase: TvSeriesUseCase
@@ -51,4 +50,4 @@ class HomeViewModel @Inject constructor(
             _uiStateOnAir.value = it
         }
     }
-}*/
+}

@@ -3,6 +3,7 @@ package com.example.barnaton.data.repository
 import com.example.barnaton.data.NetworkBoundResource
 import com.example.barnaton.data.Resource
 import com.example.barnaton.data.local.LocalDataSource
+import com.example.barnaton.data.local.entity.TypeEntity
 import com.example.barnaton.data.remote.RemoteDataSource
 import com.example.barnaton.data.remote.network.ApiResponse
 import com.example.barnaton.data.remote.response.TvSeriesResponse
@@ -21,18 +22,18 @@ class TvSeriesRepositoryImpl @Inject constructor(
     override fun getAllTopRated(): Flow<Resource<List<TvSeries>>> {
         return object : NetworkBoundResource<List<TvSeries>, TvSeriesResponse>() {
             override fun loadFromDB(): Flow<List<TvSeries>> {
-                return localDataSource.getAllTvSeries().map {
+                return localDataSource.getAllTvSeries(TypeEntity.TOP_RATED.value).map {
                     DataMapper.tvEntityToDomain(it)
                 }
             }
 
             override suspend fun createCall(): Flow<ApiResponse<TvSeriesResponse>> {
-                return remoteDataSource.getList(1)
+                return remoteDataSource.getListTopRated()
             }
 
             override suspend fun saveCallResult(data: TvSeriesResponse) {
-                localDataSource.deleteAllTvSeries()
-                DataMapper.tvResponseToEntity(data).let {
+                localDataSource.deleteAllTvSeries(TypeEntity.TOP_RATED.value)
+                DataMapper.tvResponseToEntity(data, TypeEntity.TOP_RATED.value).let {
                     localDataSource.insertAllTvSeries(it)
                 }
             }
@@ -42,18 +43,18 @@ class TvSeriesRepositoryImpl @Inject constructor(
     override fun getAllTopOnAir(): Flow<Resource<List<TvSeries>>> {
         return object : NetworkBoundResource<List<TvSeries>, TvSeriesResponse>() {
             override fun loadFromDB(): Flow<List<TvSeries>> {
-                return localDataSource.getAllTvSeries().map {
+                return localDataSource.getAllTvSeries(TypeEntity.ON_AIR.value).map {
                     DataMapper.tvEntityToDomain(it)
                 }
             }
 
             override suspend fun createCall(): Flow<ApiResponse<TvSeriesResponse>> {
-                return remoteDataSource.getList(0)
+                return remoteDataSource.getListOnAir()
             }
 
             override suspend fun saveCallResult(data: TvSeriesResponse) {
-                localDataSource.deleteAllTvSeries()
-                DataMapper.tvResponseToEntity(data).let {
+                localDataSource.deleteAllTvSeries(TypeEntity.ON_AIR.value)
+                DataMapper.tvResponseToEntity(data, TypeEntity.ON_AIR.value).let {
                     localDataSource.insertAllTvSeries(it)
                 }
             }
@@ -63,18 +64,18 @@ class TvSeriesRepositoryImpl @Inject constructor(
     override fun getAllPopular(): Flow<Resource<List<TvSeries>>> {
         return object : NetworkBoundResource<List<TvSeries>, TvSeriesResponse>() {
             override fun loadFromDB(): Flow<List<TvSeries>> {
-                return localDataSource.getAllTvSeries().map {
+                return localDataSource.getAllTvSeries(TypeEntity.POPULAR.value).map {
                     DataMapper.tvEntityToDomain(it)
                 }
             }
 
             override suspend fun createCall(): Flow<ApiResponse<TvSeriesResponse>> {
-                return remoteDataSource.getList(2)
+                return remoteDataSource.getListPopular()
             }
 
             override suspend fun saveCallResult(data: TvSeriesResponse) {
-                localDataSource.deleteAllTvSeries()
-                DataMapper.tvResponseToEntity(data).let {
+                localDataSource.deleteAllTvSeries(TypeEntity.POPULAR.value)
+                DataMapper.tvResponseToEntity(data, TypeEntity.POPULAR.value).let {
                     localDataSource.insertAllTvSeries(it)
                 }
             }

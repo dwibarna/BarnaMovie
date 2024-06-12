@@ -13,15 +13,35 @@ import javax.inject.Singleton
 @Singleton
 class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
 
-    suspend fun getList(category: Int): Flow<ApiResponse<TvSeriesResponse>> = flow {
+    suspend fun getListPopular(): Flow<ApiResponse<TvSeriesResponse>> = flow {
+        try {
+            emit(
+                ApiResponse.Success(apiService.getPopular())
+            )
+        } catch (e: Throwable) {
+            emit(ApiResponse.Error(e.message.toString()))
+        }
+    }.flowOn(Dispatchers.IO)
+
+
+    suspend fun getListTopRated(): Flow<ApiResponse<TvSeriesResponse>> = flow {
         try {
             emit(
                 ApiResponse.Success(
-                    when (category) {
-                        1 -> apiService.getTopRated()
-                        2 -> apiService.getPopular()
-                        else -> apiService.getOnTheAir()
-                    }
+                    apiService.getTopRated()
+                )
+            )
+        } catch (e: Throwable) {
+            emit(ApiResponse.Error(e.message.toString()))
+        }
+    }.flowOn(Dispatchers.IO)
+
+
+    suspend fun getListOnAir(): Flow<ApiResponse<TvSeriesResponse>> = flow {
+        try {
+            emit(
+                ApiResponse.Success(
+                    apiService.getOnTheAir()
                 )
             )
         } catch (e: Throwable) {
