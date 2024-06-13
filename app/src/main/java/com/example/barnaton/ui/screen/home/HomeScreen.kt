@@ -21,6 +21,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.barnaton.data.Resource
 import com.example.barnaton.domain.model.TvSeries
+import com.example.barnaton.ui.components.Banner
 import com.example.barnaton.ui.components.HomeSection
 import com.example.barnaton.ui.components.TvSeriesList
 import com.example.barnaton.ui.theme.midNightBlue
@@ -46,6 +47,11 @@ fun HomeScreen(
     ) {
         LazyColumn(
         ) {
+
+            item {
+                Banner()
+            }
+
             item {
                 TVSeriesOnAir(stateOnAir = stateOnAir)
             }
