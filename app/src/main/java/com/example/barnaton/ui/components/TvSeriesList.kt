@@ -17,18 +17,25 @@ import androidx.compose.ui.unit.dp
 import com.example.barnaton.domain.model.TvSeries
 
 @Composable
-fun TvSeriesList(items: List<TvSeries>, modifier: Modifier = Modifier, stateHome: Boolean = true) {
+fun TvSeriesList(
+    items: List<TvSeries>,
+    modifier: Modifier = Modifier,
+    stateHome: Boolean = true,
+    navigateToDetail: ((Int) -> Unit)? = null
+) {
     var stateExpand by remember { mutableStateOf(false) }
     val visibleList = if (stateExpand) items else items.take(3)
 
     LazyColumn(
-        modifier = modifier.fillMaxWidth().height(500.dp)
+        modifier = modifier
+            .fillMaxWidth()
+            .height(500.dp)
     ) {
         items(
             items = if (stateHome) visibleList else items,
             key = { it.id }
         ) {
-            CardItem(tvSeries = it)
+            CardItem(tvSeries = it, navigateToDetail = navigateToDetail)
         }
         if (stateHome) {
             item {

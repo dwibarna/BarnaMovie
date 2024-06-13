@@ -1,7 +1,9 @@
 package com.example.barnaton.utils
 
 import com.example.barnaton.data.local.entity.TvSeriesEntity
+import com.example.barnaton.data.remote.response.TvSeriesDetailResponse
 import com.example.barnaton.data.remote.response.TvSeriesResponse
+import com.example.barnaton.domain.model.TvDetailSeries
 import com.example.barnaton.domain.model.TvSeries
 
 object DataMapper {
@@ -52,5 +54,49 @@ object DataMapper {
             ).let(array::add)
         }
         return array
+    }
+
+    fun tvDetailResponseToDomain(data: TvSeriesDetailResponse): TvDetailSeries {
+        with(data) {
+            return TvDetailSeries(
+                originalLanguage ?: "",
+                numberOfEpisodes ?: 0,
+                type ?: "",
+                backdropPath ?: "",
+                popularity ?: 0F,
+                id ?: 0,
+                numberOfSeasons ?: 0,
+                voteCount ?: 0,
+                firstAirDate ?: "",
+                overview ?: "",
+                "https://image.tmdb.org/t/p/w500" +(posterPath ?: ""),
+                originalName ?: "",
+                voteAverage ?: 0f,
+                name ?: "",
+                tagline ?: "",
+                convertToDuration(episodeRunTime ?: emptyList()),
+                adult ?: false,
+                inProduction ?: false,
+                lastAirDate ?: "",
+                homepage ?: "",
+                status ?: ""
+            )
+        }
+    }
+
+    private fun convertToDuration(episodeRunTime: List<Int>): String {
+        var tempTime = 0
+        episodeRunTime.forEach {
+            tempTime += it
+        }
+        val time = tempTime.div(if (episodeRunTime.isEmpty()) 1 else episodeRunTime.size)
+        val hours = time / 60
+        val minutes = time % 60
+
+        return if (hours > 0) {
+            "$hours Hours $minutes Minutes"
+        } else {
+            "$minutes Minutes"
+        }
     }
 }

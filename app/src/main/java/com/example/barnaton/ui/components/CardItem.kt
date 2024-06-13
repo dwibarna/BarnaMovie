@@ -1,5 +1,6 @@
 package com.example.barnaton.ui.components
 
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -22,16 +23,21 @@ import coil.compose.SubcomposeAsyncImage
 import com.example.barnaton.domain.model.TvSeries
 
 @Composable
-fun CardItem(tvSeries: TvSeries, modifier: Modifier = Modifier) {
+fun CardItem(tvSeries: TvSeries, modifier: Modifier = Modifier, navigateToDetail: ((Int) -> Unit)? = null) {
     Card(
         modifier = modifier
             .height(200.dp)
             .padding(vertical = 8.dp, horizontal = 16.dp),
         shape = RoundedCornerShape(8.dp),
+        onClick = {
+            navigateToDetail?.invoke(tvSeries.id)
+
+            Log.d("CEKKKKKKSSSS", tvSeries.name + tvSeries.id.toString())
+        }
     ) {
         Box(
             modifier = modifier
-                .fillMaxSize()
+                .fillMaxSize(),
         ) {
             SubcomposeAsyncImage(
                 model = tvSeries.backdropPath,

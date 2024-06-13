@@ -2,6 +2,7 @@ package com.example.barnaton.data.remote
 
 import com.example.barnaton.data.remote.network.ApiResponse
 import com.example.barnaton.data.remote.network.ApiService
+import com.example.barnaton.data.remote.response.TvSeriesDetailResponse
 import com.example.barnaton.data.remote.response.TvSeriesResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -42,6 +43,18 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
             emit(
                 ApiResponse.Success(
                     apiService.getOnTheAir()
+                )
+            )
+        } catch (e: Throwable) {
+            emit(ApiResponse.Error(e.message.toString()))
+        }
+    }.flowOn(Dispatchers.IO)
+
+    suspend fun getDetailTvSeries(id: Int): Flow<ApiResponse<TvSeriesDetailResponse>> = flow {
+        try {
+            emit(
+                ApiResponse.Success(
+                    apiService.getDetailTvSeries(id = id)
                 )
             )
         } catch (e: Throwable) {

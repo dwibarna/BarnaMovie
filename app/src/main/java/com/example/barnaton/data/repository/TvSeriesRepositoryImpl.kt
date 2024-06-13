@@ -7,9 +7,12 @@ import com.example.barnaton.data.local.entity.TypeEntity
 import com.example.barnaton.data.remote.RemoteDataSource
 import com.example.barnaton.data.remote.network.ApiResponse
 import com.example.barnaton.data.remote.response.TvSeriesResponse
+import com.example.barnaton.domain.model.TvDetailSeries
 import com.example.barnaton.domain.model.TvSeries
 import com.example.barnaton.utils.DataMapper
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -80,5 +83,20 @@ class TvSeriesRepositoryImpl @Inject constructor(
                 }
             }
         }.asFlow()
+    }
+
+    override fun getDetailFavorite(id: Int): Flow<Resource<TvDetailSeries>> {
+        return flow {
+            emit(Resource.Loading())
+            when (val apiResponse = remoteDataSource.getDetailTvSeries(id = id).first()) {
+                is ApiResponse.Error -> {
+                    emit(Resource.Error(message = apiResponse.message))
+                }
+
+                is ApiResponse.Success -> {
+                    emit(Resource.Success(DataMapper.tvDetailResponseToDomain(apiResponse.data)))
+                }
+            }
+        }
     }
 }
