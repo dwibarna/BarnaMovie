@@ -8,9 +8,11 @@ import com.example.barnaton.data.remote.RemoteDataSource
 import com.example.barnaton.data.remote.network.ApiResponse
 import com.example.barnaton.data.remote.response.TvSeriesResponse
 import com.example.barnaton.domain.model.TvDetailSeries
+import com.example.barnaton.domain.model.TvFavorite
 import com.example.barnaton.domain.model.TvSeries
 import com.example.barnaton.utils.DataMapper
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
@@ -98,5 +100,28 @@ class TvSeriesRepositoryImpl @Inject constructor(
                 }
             }
         }
+    }
+
+    override fun getAllTvFavorite(): Flow<Resource<List<TvFavorite>>> {
+        return flow {
+            emit(Resource.Loading())
+            emitAll(
+                localDataSource.getAllTvFavorite().map {
+                    Resource.Success(DataMapper.tvFavoriteListEntityToDomain(it))
+                }
+            )
+        }
+    }
+
+    override suspend fun insertTvFavorite(entity: TvFavorite) {
+        localDataSource.insertTvFavorite(DataMapper.tvFavoriteDomainToEntity(entity))
+    }
+
+    override suspend fun deleteTvFavorite(id: Int) {
+        localDataSource.deleteTvFavorite(id)
+    }
+
+    override fun getTvFavorite(id: Int): TvFavorite {
+        return DataMapper.tvFavoriteEntityToDomain(localDataSource.getTvFavorite(id))
     }
 }

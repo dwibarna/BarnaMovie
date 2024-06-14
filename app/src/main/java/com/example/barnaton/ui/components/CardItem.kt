@@ -1,6 +1,5 @@
 package com.example.barnaton.ui.components
 
-import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -20,10 +19,15 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.SubcomposeAsyncImage
+import com.example.barnaton.domain.model.TvFavorite
 import com.example.barnaton.domain.model.TvSeries
 
 @Composable
-fun CardItem(tvSeries: TvSeries, modifier: Modifier = Modifier, navigateToDetail: ((Int) -> Unit)? = null) {
+fun CardItem(
+    tvSeries: TvSeries,
+    modifier: Modifier = Modifier,
+    navigateToDetail: ((Int) -> Unit)? = null
+) {
     Card(
         modifier = modifier
             .height(200.dp)
@@ -31,8 +35,6 @@ fun CardItem(tvSeries: TvSeries, modifier: Modifier = Modifier, navigateToDetail
         shape = RoundedCornerShape(8.dp),
         onClick = {
             navigateToDetail?.invoke(tvSeries.id)
-
-            Log.d("CEKKKKKKSSSS", tvSeries.name + tvSeries.id.toString())
         }
     ) {
         Box(
@@ -68,6 +70,66 @@ fun CardItem(tvSeries: TvSeries, modifier: Modifier = Modifier, navigateToDetail
                 )
                 Text(
                     text = tvSeries.overview,
+                    maxLines = 2,
+                    overflow = TextOverflow.Ellipsis,
+                    color = Color.White,
+                    style = MaterialTheme.typography.bodyMedium
+                )
+            }
+        }
+    }
+}
+
+
+
+@Composable
+fun CardItemFavorite(
+    tvFavorite: TvFavorite,
+    modifier: Modifier = Modifier,
+    navigateToDetail: ((Int) -> Unit)? = null
+) {
+    Card(
+        modifier = modifier
+            .height(200.dp)
+            .padding(vertical = 8.dp, horizontal = 16.dp),
+        shape = RoundedCornerShape(8.dp),
+        onClick = {
+            navigateToDetail?.invoke(tvFavorite.id)
+        }
+    ) {
+        Box(
+            modifier = modifier
+                .fillMaxSize(),
+        ) {
+            SubcomposeAsyncImage(
+                model = tvFavorite.backdropPath,
+                contentDescription = tvFavorite.name,
+                contentScale = ContentScale.Crop,
+                loading = {
+                    Box(
+                        modifier = modifier.fillMaxSize(),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        CircularProgressIndicator()
+                    }
+                },
+                modifier = modifier.fillMaxSize()
+            )
+            Column(
+                modifier = modifier
+                    .fillMaxSize()
+                    .padding(16.dp),
+                verticalArrangement = Arrangement.Bottom,
+            ) {
+                Text(
+                    text = tvFavorite.name,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                    color = Color.White,
+                    style = MaterialTheme.typography.titleLarge
+                )
+                Text(
+                    text = tvFavorite.overview,
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis,
                     color = Color.White,

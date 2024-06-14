@@ -23,6 +23,8 @@ import com.example.barnaton.ui.components.BottomBar
 import com.example.barnaton.ui.navigations.Screen
 import com.example.barnaton.ui.screen.detail.DetailScreen
 import com.example.barnaton.ui.screen.detail.DetailViewModel
+import com.example.barnaton.ui.screen.favorite.FavoriteScreen
+import com.example.barnaton.ui.screen.favorite.FavoriteViewModel
 import com.example.barnaton.ui.screen.home.HomeScreen
 import com.example.barnaton.ui.screen.home.HomeViewModel
 import com.example.barnaton.ui.theme.BarnatonTheme
@@ -66,11 +68,11 @@ fun MainApp(
             }
         },
         modifier = modifier
-    ) {
+    ) { paddingValues ->
         NavHost(
             navController = navHostController,
             startDestination = Screen.Home.route,
-            modifier = Modifier.padding(it)
+            modifier = Modifier.padding(paddingValues)
         ) {
             composable(Screen.Home.route) {
                 val viewModels = hiltViewModel<HomeViewModel>()
@@ -82,7 +84,13 @@ fun MainApp(
                 )
             }
             composable(Screen.Favorite.route) {
-/*                FavoriteScreen()*/
+                val viewModels = hiltViewModel<FavoriteViewModel>()
+                FavoriteScreen(
+                    viewModel = viewModels,
+                    navigateToDetail = { id ->
+                        navHostController.navigate(Screen.DetailScreen.createRoute(id))
+                    }
+                )
             }
             composable(Screen.Profile.route) {
 /*                ProfileScreen()*/

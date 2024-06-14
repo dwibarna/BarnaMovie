@@ -1,7 +1,7 @@
 package com.example.barnaton.data.local
 
+import com.example.barnaton.data.local.entity.TvFavoriteEntity
 import com.example.barnaton.data.local.entity.TvSeriesEntity
-import com.example.barnaton.data.local.entity.TypeEntity
 import com.example.barnaton.data.local.room.TvSeriesDatabase
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -16,4 +16,12 @@ class LocalDataSource @Inject constructor(private val database: TvSeriesDatabase
 
     suspend fun deleteAllTvSeries(typeEntity: String) = database.tvSeriesDao().deleteAllTvSeries(typeEntity)
 
+
+    fun getAllTvFavorite(): Flow<List<TvFavoriteEntity>> = database.tvFavoriteDao().getAllTvFavorite()
+
+    suspend fun insertTvFavorite(entity: TvFavoriteEntity) = database.tvFavoriteDao().insertTvFavorite(entity = entity)
+
+    suspend fun deleteTvFavorite(id: Int) = database.tvFavoriteDao().deleteTvFavorite(id = id)
+
+    fun getTvFavorite(id: Int): TvFavoriteEntity? = database.tvFavoriteDao().getTvFavorite(id = id)
 }

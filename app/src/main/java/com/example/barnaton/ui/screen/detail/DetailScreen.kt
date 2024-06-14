@@ -11,8 +11,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.FavoriteBorder
+import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -28,6 +29,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.SubcomposeAsyncImage
 import com.example.barnaton.data.Resource
+import com.example.barnaton.domain.model.TvFavorite
 import com.example.barnaton.ui.components.RatingStar
 import com.example.barnaton.ui.theme.BarnatonTheme
 import com.example.barnaton.ui.theme.midNightBlue
@@ -41,6 +43,7 @@ fun DetailScreen(
 ) {
     LaunchedEffect(id) {
         viewModel.getDetailData(id)
+
     }
 
     val stateDetail by viewModel.uiStateDetail.collectAsState()
@@ -71,11 +74,22 @@ fun DetailScreen(
                 Column(modifier = modifier) {
                     stateDetail.data?.let { data ->
                         with(data) {
+                            val dataNow = TvFavorite(
+                                id = id,
+                                backdropPath = backdropPath,
+                                name = name,
+                                overview = overview
+                            )
+
+                            viewModel.getStateItemFavorite(viewModel.getTvFavorite(id).id == dataNow.id)
+                            val stateFavorite by viewModel.stateItemFavorite.collectAsState()
                             SubcomposeAsyncImage(
                                 model = posterPath,
                                 contentDescription = null,
                                 contentScale = ContentScale.Crop,
-                                modifier = modifier.fillMaxWidth().height(300.dp),
+                                modifier = modifier
+                                    .fillMaxWidth()
+                                    .height(300.dp),
                                 loading = {
                                     Box(
                                         contentAlignment = Alignment.Center
@@ -113,18 +127,23 @@ fun DetailScreen(
                                 )
                             }
 
-                            ElevatedButton(
+                            Button(
                                 modifier = modifier.padding(start = 16.dp, top = 8.dp),
                                 onClick = {
+                                    if(stateFavorite)
+                                        viewModel.deleteTvFavorite(id = id)
+                                    else
+                                        viewModel.insertTvFavorite(dataNow)
 
+                                    viewModel.getStateItemFavorite(stateFavorite.not())
                                 }) {
                                 Image(
-                                    imageVector = Icons.Default.Favorite,
+                                    imageVector = if (stateFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
                                     contentDescription = null
                                 )
 
                                 Text(
-                                    text = "Add Favorite",
+                                    text = if (stateFavorite) "Delete Favorite" else "Add Favorite",
                                     modifier = modifier.padding(start = 8.dp),
                                     color = Color.Black,
                                     style = MaterialTheme.typography.labelSmall

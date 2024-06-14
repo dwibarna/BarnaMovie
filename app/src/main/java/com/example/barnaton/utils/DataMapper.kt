@@ -1,9 +1,11 @@
 package com.example.barnaton.utils
 
+import com.example.barnaton.data.local.entity.TvFavoriteEntity
 import com.example.barnaton.data.local.entity.TvSeriesEntity
 import com.example.barnaton.data.remote.response.TvSeriesDetailResponse
 import com.example.barnaton.data.remote.response.TvSeriesResponse
 import com.example.barnaton.domain.model.TvDetailSeries
+import com.example.barnaton.domain.model.TvFavorite
 import com.example.barnaton.domain.model.TvSeries
 
 object DataMapper {
@@ -16,9 +18,7 @@ object DataMapper {
                     firstAirDate = it.firstAirDate,
                     overview = it.overview,
                     originalLanguage = it.originalLanguage,
-                    /*                    genreIds = it.genreIds ,*/
                     posterPath = it.posterPath,
-                    /*                    originCountry = it.originCountry,*/
                     backdropPath = it.backdropPath,
                     originalName = it.originalName,
                     voteAverage = it.voteAverage,
@@ -40,9 +40,7 @@ object DataMapper {
                 firstAirDate = dataa.firstAirDate ?: "",
                 overview = dataa.overview ?: "No Overview",
                 originalLanguage = dataa.originalLanguage ?: "id",
-                /*                genreIds = dataa.genreIds ?: emptyList(),*/
                 posterPath = "https://image.tmdb.org/t/p/w500" + (dataa.posterPath ?: ""),
-                /*                originCountry = dataa.originCountry ?: emptyList(),*/
                 backdropPath = "https://image.tmdb.org/t/p/w500" + (dataa.backdropPath ?: ""),
                 originalName = dataa.originalName ?: "Untitled",
                 voteAverage = dataa.voteAverage ?: 0F,
@@ -62,7 +60,7 @@ object DataMapper {
                 originalLanguage ?: "",
                 numberOfEpisodes ?: 0,
                 type ?: "",
-                backdropPath ?: "",
+                "https://image.tmdb.org/t/p/w500" +(backdropPath ?: ""),
                 popularity ?: 0F,
                 id ?: 0,
                 numberOfSeasons ?: 0,
@@ -98,5 +96,38 @@ object DataMapper {
         } else {
             "$minutes Minutes"
         }
+    }
+
+    fun tvFavoriteListEntityToDomain(data: List<TvFavoriteEntity>): List<TvFavorite> {
+        val mutableList: MutableList<TvFavorite> = mutableListOf()
+
+        data.forEach {
+            TvFavorite(
+                id = it.id,
+                backdropPath = it.backdropPath ?: "",
+                name = it.name ?: "",
+                overview = it.overview ?: ""
+            ).let(mutableList::add)
+        }
+
+        return mutableList
+    }
+
+    fun tvFavoriteDomainToEntity(entity: TvFavorite): TvFavoriteEntity {
+        return TvFavoriteEntity(
+            id = entity.id,
+            backdropPath = entity.backdropPath,
+            name = entity.name,
+            overview = entity.overview
+        )
+    }
+
+    fun tvFavoriteEntityToDomain(tvFavorite: TvFavoriteEntity?): TvFavorite {
+        return TvFavorite(
+            id = tvFavorite?.id ?: 0,
+            backdropPath = tvFavorite?.backdropPath ?: "-",
+            name = tvFavorite?.name ?: "-",
+            overview = tvFavorite?.overview ?: "-"
+        )
     }
 }

@@ -1,6 +1,6 @@
 package com.example.barnaton.domain.model
 
-data class TvDetailSeries (
+data class TvDetailSeries(
     val originalLanguage: String,
     val numberOfEpisodes: Int,
     val type: String,

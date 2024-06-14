@@ -23,9 +23,13 @@ class DatabaseModule {
             name = "tv_series.db"
         )
             .fallbackToDestructiveMigration()
+            .allowMainThreadQueries()
             .build()
 
 
     @Provides
     fun provideTvSeriesDao(database: TvSeriesDatabase) = database.tvSeriesDao()
+
+    @Provides
+    fun provideTvFavoriteDao(database: TvSeriesDatabase) = database.tvFavoriteDao()
 }
