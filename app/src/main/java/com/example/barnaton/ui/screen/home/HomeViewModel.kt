@@ -33,6 +33,11 @@ class HomeViewModel @Inject constructor(
     val uiStateOnAir: StateFlow<Resource<List<TvSeries>>>
         get() = _uiStateOnAir
 
+    private val _uiStateOnSearch: MutableStateFlow<Resource<List<TvSeries>>> =
+        MutableStateFlow(Resource.Loading())
+    val uiStateOnSearch: StateFlow<Resource<List<TvSeries>>>
+        get() = _uiStateOnSearch
+
     fun getAllPopular() = viewModelScope.launch {
         useCase.getAllPopular().collect {
             _uiStatePopular.value = it
@@ -48,6 +53,12 @@ class HomeViewModel @Inject constructor(
     fun getAllOnAir() = viewModelScope.launch {
         useCase.getAllOnAir().collect {
             _uiStateOnAir.value = it
+        }
+    }
+
+    fun getAllOnSearch(query: String) = viewModelScope.launch {
+        useCase.getSearchTvSeries(query).collect {
+            _uiStateOnSearch.value = it
         }
     }
 }

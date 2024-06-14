@@ -17,7 +17,8 @@ import com.example.barnaton.ui.theme.BarnatonTheme
 
 @Composable
 fun Banner(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onSearch: ((String) -> Unit)? = null,
 ) {
     Column(
         modifier = modifier.background(Color.White).fillMaxWidth()
@@ -28,7 +29,11 @@ fun Banner(
             contentScale = ContentScale.Crop,
             modifier = modifier.padding(start = 16.dp, top = 16.dp)
         )
-        CustomSearchBar()
+        CustomSearchBar(
+            onSearch = {
+                onSearch?.invoke(it)
+            }
+        )
     }
 }
 

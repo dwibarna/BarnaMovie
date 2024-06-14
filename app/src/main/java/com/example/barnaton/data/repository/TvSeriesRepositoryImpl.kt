@@ -124,4 +124,25 @@ class TvSeriesRepositoryImpl @Inject constructor(
     override fun getTvFavorite(id: Int): TvFavorite {
         return DataMapper.tvFavoriteEntityToDomain(localDataSource.getTvFavorite(id))
     }
+
+    override suspend fun getSearchTvSeries(query: String): Flow<Resource<List<TvSeries>>> {
+        return object : NetworkBoundResource<List<TvSeries>, TvSeriesResponse>() {
+            override fun loadFromDB(): Flow<List<TvSeries>> {
+                return localDataSource.getAllTvSeries(TypeEntity.OTHER.value).map {
+                    DataMapper.tvEntityToDomain(it)
+                }
+            }
+
+            override suspend fun createCall(): Flow<ApiResponse<TvSeriesResponse>> {
+                return remoteDataSource.getSearchTvSeries(query = query)
+            }
+
+            override suspend fun saveCallResult(data: TvSeriesResponse) {
+                localDataSource.deleteAllTvSeries(TypeEntity.OTHER.value)
+                DataMapper.tvResponseToEntity(data, TypeEntity.OTHER.value).let {
+                    localDataSource.insertAllTvSeries(it)
+                }
+            }
+        }.asFlow()
+    }
 }

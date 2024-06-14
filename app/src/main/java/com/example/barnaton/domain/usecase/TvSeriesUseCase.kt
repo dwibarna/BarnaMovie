@@ -17,7 +17,12 @@ interface TvSeriesUseCase {
     fun getDetailFavorite(id: Int): Flow<Resource<TvDetailSeries>>
 
     fun getAllTvFavorite(): Flow<Resource<List<TvFavorite>>>
+
     suspend fun insertTvFavorite(entity: TvFavorite)
+
     suspend fun deleteTvFavorite(id: Int)
+
     fun getTvFavorite(id: Int): TvFavorite
+
+    suspend fun getSearchTvSeries(query: String): Flow<Resource<List<TvSeries>>>
 }

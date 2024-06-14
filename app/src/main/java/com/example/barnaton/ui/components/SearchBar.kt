@@ -10,6 +10,10 @@ import androidx.compose.material3.SearchBar
 import androidx.compose.material3.SearchBarDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -18,19 +22,18 @@ import com.example.barnaton.ui.theme.BarnatonTheme
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CustomSearchBar(
-    query: String = "",
     onSearch: ((String) -> Unit)? = null,
 ) {
+    var searchQuery by remember { mutableStateOf("") }
     SearchBar(
         modifier = Modifier
             .padding(start = 16.dp, end = 16.dp, bottom = 16.dp),
-//            .heightIn(min = 48.dp),
-        query = query,
+        query = searchQuery,
         onQueryChange = {
-
+            searchQuery = it
         },
         onSearch = {
-            onSearch?.invoke(it)
+            onSearch?.invoke(searchQuery)
         },
         leadingIcon = {
             Icon(
@@ -39,7 +42,7 @@ fun CustomSearchBar(
                 tint = MaterialTheme.colorScheme.onSurfaceVariant
             )
         },
-        active = query.isNotBlank(),
+        active = false,
         onActiveChange = {
 
         },

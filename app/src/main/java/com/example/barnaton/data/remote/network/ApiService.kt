@@ -28,4 +28,10 @@ interface ApiService {
         @Path("id") id: Int,
         @Query("api_key") apiKey: String = BuildConfig.BASE_API_KEY,
     ): TvSeriesDetailResponse
+
+    @GET("search/tv")
+    suspend fun getSearchTvSeries(
+        @Query("api_key") apiKey: String = BuildConfig.BASE_API_KEY,
+        @Query("query") query: String
+    ): TvSeriesResponse
 }

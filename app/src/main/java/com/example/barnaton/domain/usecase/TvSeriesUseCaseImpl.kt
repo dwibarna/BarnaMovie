@@ -41,4 +41,8 @@ class TvSeriesUseCaseImpl @Inject constructor(private val repository: TvSeriesRe
     override fun getTvFavorite(id: Int): TvFavorite {
         return repository.getTvFavorite(id = id)
     }
+
+    override suspend fun getSearchTvSeries(query: String): Flow<Resource<List<TvSeries>>> {
+        return repository.getSearchTvSeries(query = query)
+    }
 }

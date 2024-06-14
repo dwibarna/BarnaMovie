@@ -61,4 +61,16 @@ class RemoteDataSource @Inject constructor(private val apiService: ApiService) {
             emit(ApiResponse.Error(e.message.toString()))
         }
     }.flowOn(Dispatchers.IO)
+
+    suspend fun getSearchTvSeries(query: String): Flow<ApiResponse<TvSeriesResponse>> = flow {
+        try {
+            emit(
+                ApiResponse.Success(
+                    apiService.getSearchTvSeries(query = query)
+                )
+            )
+        } catch (e: Throwable) {
+            emit(ApiResponse.Error(e.message.toString()))
+        }
+    }.flowOn(Dispatchers.IO)
 }

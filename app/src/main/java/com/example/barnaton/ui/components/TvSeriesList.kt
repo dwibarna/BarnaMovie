@@ -55,6 +55,29 @@ fun TvSeriesList(
 
 
 @Composable
+fun TvSeriesListSearch(
+    items: List<TvSeries>,
+    modifier: Modifier = Modifier,
+    navigateToDetail: ((Int) -> Unit)? = null
+) {
+
+    LazyColumn(
+        modifier = modifier
+            .fillMaxWidth()
+            .height(500.dp)
+
+    ) {
+        items(
+            items = items,
+            key = { it.id }
+        ) {
+            CardItem(tvSeries = it, navigateToDetail = navigateToDetail)
+        }
+    }
+}
+
+
+@Composable
 fun TvSeriesFavoriteList(
     items: List<TvFavorite>,
     modifier: Modifier = Modifier,
