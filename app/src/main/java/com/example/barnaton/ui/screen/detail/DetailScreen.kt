@@ -24,10 +24,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.SubcomposeAsyncImage
+import com.example.barnaton.R
 import com.example.barnaton.data.Resource
 import com.example.barnaton.domain.model.TvFavorite
 import com.example.barnaton.ui.components.RatingStar
@@ -37,7 +39,6 @@ import com.example.barnaton.ui.theme.midNightBlue
 @Composable
 fun DetailScreen(
     modifier: Modifier = Modifier,
-    navigateBack: (() -> Boolean)? = null,
     id: Int = 0,
     viewModel: DetailViewModel = viewModel()
 ) {
@@ -58,7 +59,7 @@ fun DetailScreen(
                 Box(
                     contentAlignment = Alignment.Center
                 ) {
-                    Text(text = stateDetail.message ?: "Error tidak di ketahui")
+                    Text(text = stateDetail.message ?: stringResource(R.string.error_tidak_diketahui))
                 }
             }
 
@@ -130,7 +131,7 @@ fun DetailScreen(
                             Button(
                                 modifier = modifier.padding(start = 16.dp, top = 8.dp),
                                 onClick = {
-                                    if(stateFavorite)
+                                    if (stateFavorite)
                                         viewModel.deleteTvFavorite(id = id)
                                     else
                                         viewModel.insertTvFavorite(dataNow)
@@ -143,7 +144,9 @@ fun DetailScreen(
                                 )
 
                                 Text(
-                                    text = if (stateFavorite) "Delete Favorite" else "Add Favorite",
+                                    text = if (stateFavorite) stringResource(R.string.delete_favorite) else stringResource(
+                                        R.string.add_favorite
+                                    ),
                                     modifier = modifier.padding(start = 8.dp),
                                     color = Color.Black,
                                     style = MaterialTheme.typography.labelSmall

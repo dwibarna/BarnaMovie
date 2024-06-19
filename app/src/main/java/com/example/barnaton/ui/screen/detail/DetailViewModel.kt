@@ -22,7 +22,7 @@ class DetailViewModel @Inject constructor(
 
     val uiStateDetail: StateFlow<Resource<TvDetailSeries>> get() = _uiStateDetail
 
-    private  val _stateItemFavorite: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    private val _stateItemFavorite: MutableStateFlow<Boolean> = MutableStateFlow(false)
     val stateItemFavorite: StateFlow<Boolean> get() = _stateItemFavorite
 
     fun getStateItemFavorite(boolean: Boolean) = viewModelScope.launch {

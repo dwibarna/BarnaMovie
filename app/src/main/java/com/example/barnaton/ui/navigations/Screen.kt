@@ -5,9 +5,9 @@ sealed class Screen(val route: String) {
 
     data object Favorite : Screen("favorite")
 
-    data object Profile: Screen("profile")
+    data object Profile : Screen("profile")
 
-    data object DetailScreen: Screen("home/{detailId}") {
+    data object DetailScreen : Screen("home/{detailId}") {
         fun createRoute(detailId: Int) = "home/$detailId"
     }
 }

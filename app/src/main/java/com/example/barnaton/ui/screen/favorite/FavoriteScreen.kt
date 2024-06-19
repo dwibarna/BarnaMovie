@@ -11,7 +11,9 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.barnaton.R
 import com.example.barnaton.data.Resource
 import com.example.barnaton.ui.components.HomeSection
 import com.example.barnaton.ui.components.TvSeriesFavoriteList
@@ -33,11 +35,12 @@ fun FavoriteScreen(
             .fillMaxSize()
             .background(midNightBlue)
     ) {
-        HomeSection(title = "Favorite List") {
-            when(stateUi) {
+        HomeSection(title = stringResource(R.string.favorite_list)) {
+            when (stateUi) {
                 is Resource.Error -> {
-                    Text(text = stateUi.message ?: "Error tidak diketahui")
+                    Text(text = stateUi.message ?: stringResource(R.string.error_tidak_diketahui))
                 }
+
                 is Resource.Loading -> {
                     Box(
                         contentAlignment = Alignment.Center
@@ -45,6 +48,7 @@ fun FavoriteScreen(
                         CircularProgressIndicator()
                     }
                 }
+
                 is Resource.Success -> {
                     TvSeriesFavoriteList(
                         items = stateUi.data ?: emptyList(),

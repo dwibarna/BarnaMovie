@@ -21,7 +21,9 @@ fun Banner(
     onSearch: ((String) -> Unit)? = null,
 ) {
     Column(
-        modifier = modifier.background(Color.White).fillMaxWidth()
+        modifier = modifier
+            .background(Color.White)
+            .fillMaxWidth()
     ) {
         Image(
             painter = painterResource(id = R.drawable.background_tmdb),

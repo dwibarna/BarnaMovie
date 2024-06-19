@@ -51,18 +51,21 @@ fun BottomBar(
             NavigationBarItem(
                 selected = currentRoute == it.screen.route,
                 onClick = {
-                          navHostController.navigate(it.screen.route) {
-                              popUpTo(
-                                  navHostController.graph.findStartDestination().id
-                              ) {
-                                  saveState = true
-                              }
-                              restoreState = true
-                              launchSingleTop = true
-                          }
+                    navHostController.navigate(it.screen.route) {
+                        popUpTo(
+                            navHostController.graph.findStartDestination().id
+                        ) {
+                            saveState = true
+                        }
+                        restoreState = true
+                        launchSingleTop = true
+                    }
                 },
                 icon = {
-                    Icon(imageVector = it.icon, contentDescription = it.title)
+                    Icon(
+                        imageVector = it.icon,
+                        contentDescription = if (it.title == "Profile") "about_page" else it.title
+                    )
                 },
                 label = {
                     Text(text = it.title)

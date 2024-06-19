@@ -15,8 +15,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.barnaton.R
 import com.example.barnaton.ui.theme.BarnatonTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -47,7 +49,7 @@ fun CustomSearchBar(
 
         },
         placeholder = {
-            Text(text = "Search TV Series....")
+            Text(text = stringResource(R.string.search_tv_series))
         },
         shape = MaterialTheme.shapes.large,
         colors = SearchBarDefaults.colors(

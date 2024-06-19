@@ -15,7 +15,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.barnaton.R
 import com.example.barnaton.data.Resource
 import com.example.barnaton.domain.model.TvSeries
 import com.example.barnaton.ui.components.Banner
@@ -63,19 +65,28 @@ fun HomeScreen(
                     }
                 )
             }
-            if(stateQuery.isBlank()) {
+            if (stateQuery.isBlank()) {
                 item {
                     TVSeriesOnAir(stateOnAir = stateOnAir, navigateToDetail = navigateToDetail)
                 }
                 item {
-                    TvSeriesPopular(statePopular = statePopular, navigateToDetail = navigateToDetail)
+                    TvSeriesPopular(
+                        statePopular = statePopular,
+                        navigateToDetail = navigateToDetail
+                    )
                 }
                 item {
-                    TVSeriesTopRated(stateTopRated = stateTopRated, navigateToDetail = navigateToDetail)
+                    TVSeriesTopRated(
+                        stateTopRated = stateTopRated,
+                        navigateToDetail = navigateToDetail
+                    )
                 }
             } else {
                 item {
-                    TVSeriesOnSearch(stateOnSearch = stateOnSearch, navigateToDetail = navigateToDetail)
+                    TVSeriesOnSearch(
+                        stateOnSearch = stateOnSearch,
+                        navigateToDetail = navigateToDetail
+                    )
                 }
             }
         }
@@ -88,10 +99,10 @@ private fun TVSeriesOnSearch(
     modifier: Modifier = Modifier,
     navigateToDetail: ((Int) -> Unit)? = null
 ) {
-    HomeSection(title = "TV Series On Search") {
+    HomeSection(title = stringResource(R.string.tv_series_on_search)) {
         when (stateOnSearch) {
             is Resource.Error -> {
-                Text(text = stateOnSearch.message ?: "Error tidak diketahui")
+                Text(text = stateOnSearch.message ?: stringResource(R.string.error_tidak_diketahui))
             }
 
             is Resource.Loading -> {
@@ -119,10 +130,10 @@ private fun TVSeriesOnAir(
     modifier: Modifier = Modifier,
     navigateToDetail: ((Int) -> Unit)? = null
 ) {
-    HomeSection(title = "TV Series On Air") {
+    HomeSection(title = stringResource(R.string.tv_series_on_air)) {
         when (stateOnAir) {
             is Resource.Error -> {
-                Text(text = stateOnAir.message ?: "Error tidak diketahui")
+                Text(text = stateOnAir.message ?: stringResource(R.string.error_tidak_diketahui))
             }
 
             is Resource.Loading -> {
@@ -150,10 +161,10 @@ private fun TVSeriesTopRated(
     modifier: Modifier = Modifier,
     navigateToDetail: ((Int) -> Unit)? = null
 ) {
-    HomeSection(title = "TV Series Top Rated") {
+    HomeSection(title = stringResource(R.string.tv_series_top_rated)) {
         when (stateTopRated) {
             is Resource.Error -> {
-                Text(text = stateTopRated.message ?: "Error tidak diketahui")
+                Text(text = stateTopRated.message ?: stringResource(R.string.error_tidak_diketahui))
             }
 
             is Resource.Loading -> {
@@ -181,10 +192,10 @@ private fun TvSeriesPopular(
     modifier: Modifier = Modifier,
     navigateToDetail: ((Int) -> Unit)? = null
 ) {
-    HomeSection(title = "TV Series Popular") {
+    HomeSection(title = stringResource(R.string.tv_series_popular)) {
         when (statePopular) {
             is Resource.Error -> {
-                Text(text = statePopular.message ?: "Error tidak diketahui")
+                Text(text = statePopular.message ?: stringResource(R.string.error_tidak_diketahui))
             }
 
             is Resource.Loading -> {

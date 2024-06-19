@@ -21,6 +21,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.barnaton.ui.components.BottomBar
 import com.example.barnaton.ui.navigations.Screen
+import com.example.barnaton.ui.screen.about.AboutScreen
 import com.example.barnaton.ui.screen.detail.DetailScreen
 import com.example.barnaton.ui.screen.detail.DetailViewModel
 import com.example.barnaton.ui.screen.favorite.FavoriteScreen
@@ -93,7 +94,7 @@ fun MainApp(
                 )
             }
             composable(Screen.Profile.route) {
-/*                ProfileScreen()*/
+                AboutScreen()
             }
             composable(
                 route = Screen.DetailScreen.route,
@@ -105,9 +106,6 @@ fun MainApp(
                 val viewModels = hiltViewModel<DetailViewModel>()
                 DetailScreen(
                     id = id,
-                    navigateBack = {
-                        navHostController.navigateUp()
-                    },
                     viewModel = viewModels
                 )
             }

@@ -17,10 +17,11 @@ abstract class NetworkBoundResource<ResultType, RequestType> {
 
     fun asFlow(): Flow<Resource<ResultType>> = flow {
         emit(Resource.Loading())
-        when(val apiResponse = createCall().first()) {
+        when (val apiResponse = createCall().first()) {
             is ApiResponse.Error -> {
                 emit(Resource.Error(message = apiResponse.message))
             }
+
             is ApiResponse.Success -> {
                 saveCallResult(apiResponse.data)
                 emitAll(

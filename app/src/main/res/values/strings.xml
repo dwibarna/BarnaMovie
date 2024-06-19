@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">Barnaton</string>
+    <string name="tv_series_on_search">TV Series On Search</string>
+    <string name="error_tidak_diketahui">Error tidak diketahui</string>
+    <string name="tv_series_on_air">TV Series On Air</string>
+    <string name="tv_series_top_rated">TV Series Top Rated</string>
+    <string name="tv_series_popular">TV Series Popular</string>
+    <string name="favorite_list">Favorite List</string>
+    <string name="delete_favorite">Delete Favorite</string>
+    <string name="add_favorite">Add Favorite</string>
+    <string name="name_profil">Dwi Aji Sobarna</string>
+    <string name="email_profile">dwiajisobarna1@gmail.com</string>
+    <string name="search_tv_series">Search TV Series....</string>
 </resources>

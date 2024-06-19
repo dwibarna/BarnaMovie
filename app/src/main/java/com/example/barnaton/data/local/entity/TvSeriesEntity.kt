@@ -19,14 +19,8 @@ data class TvSeriesEntity(
     @ColumnInfo("original_language")
     val originalLanguage: String? = null,
 
-/*    @ColumnInfo("genre_ids")
-    val genreIds: List<Int>? = null,*/
-
     @ColumnInfo("poster_path")
     val posterPath: String? = null,
-
-/*    @ColumnInfo("origin_country")
-    val originCountry: List<String>? = null,*/
 
     @ColumnInfo("backdrop_path")
     val backdropPath: String? = null,
